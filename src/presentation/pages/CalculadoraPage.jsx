@@ -66,6 +66,7 @@ export default function CalculadoraPage() {
             className={inputClases}
             value={tiempoMinutos}
             onChange={(e) => setTiempoMinutos(e.target.value)}
+            placeholder="Luego se convierte a horas y minutos."
           />
         </Campo>
 
@@ -75,6 +76,7 @@ export default function CalculadoraPage() {
             rows={3}
             value={notas}
             onChange={(e) => setNotas(e.target.value)}
+            placeholder="Colocar URL del modelo en caso de tener, materiales adicionales, etc."
           />
         </Campo>
 

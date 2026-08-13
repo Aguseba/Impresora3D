@@ -24,7 +24,7 @@ export default function App() {
       <header className="border-b border-line bg-surface">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <span className="font-mono text-sm font-semibold text-steel tracking-wide">
-            CALCULADORA_3D
+            CALCULADORA 3D
           </span>
           <nav className="flex gap-1">
             {SECCIONES.map((s) => (
