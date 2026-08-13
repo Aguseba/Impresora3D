@@ -175,16 +175,18 @@ persistencia con estado.
   que los cambios solo afectan cálculos nuevos, no los registros ya
   guardados (que tienen su costo como snapshot).
 
-### Etapa 7 — UI: Importar/Exportar (`ImportarExportarPage.jsx`)
-
-Tres acciones:
-1. "Descargar plantilla CSV" — genera un CSV vacío solo con headers
-   `nombre,gramos,tiempo_minutos,notas` (usar `Blob` + link de descarga).
-2. "Exportar registros" — usa `ExportarRegistrosCSV`, descarga como
-   `calculadora-3d-export.csv`.
-3. "Importar CSV" — `<input type="file">`, lee el archivo con
-   `FileReader`, pasa el texto a `ImportarRegistrosCSV`, muestra el resumen
-   (cuántos se importaron, errores fila por fila).
+### Etapa 7 — UI: Importar/Exportar (`ImportarExportarPage.jsx`) ✅ Hecho
+- `src/presentation/shared/descargarArchivo.js` — helper genérico que
+  dispara la descarga de un string como archivo (`Blob` + link temporal),
+  reutilizado por la plantilla y por el export.
+- `src/presentation/hooks/useImportarExportar.js` — `descargarPlantilla()`
+  (CSV vacío solo con headers), `exportar()` (usa `exportarRegistrosCSV`),
+  `importar(archivo)` (lee el `File` con `archivo.text()`, obtiene la
+  configuración actual y llama a `importarRegistrosCSV`).
+- `src/presentation/pages/ImportarExportarPage.jsx` — 2 tarjetas: Exportar
+  registros, e Importar desde Excel (con botón de plantilla, input de
+  archivo oculto disparado por botón, y resumen de resultado con errores
+  fila por fila).
 
 ### Etapa 8 — Deploy a GitHub Pages
 
