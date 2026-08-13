@@ -128,16 +128,22 @@ una interfaz de dominio — es una excepción pragmática a la regla de
 dependencias, porque el CSV es un formato de transporte, no una fuente de
 persistencia con estado.
 
-### Etapa 4 — UI: Calculadora (`CalculadoraPage.jsx`)
-
-Formulario con: Nombre del modelo (texto), Peso en gramos (number, step 0.1),
-Tiempo en minutos (number entero) con conversión visible a "Xh Ym" en vivo,
-Notas (textarea). Botón "Calcular" muestra panel con los 6 valores
-(filamento, electricidad, desgaste, subtotal, margen, total) en `font-mono`.
-Botón "Guardar registro" solo habilitado si el cálculo es válido. Usa
-`ObtenerConfiguracion` + `calcularCosto` en vivo (mientras se tipea) y
-`CrearRegistro` al guardar. Crear `src/presentation/hooks/useCalculadora.js`
-para la lógica de estado del formulario.
+### Etapa 4 — UI: Calculadora (`CalculadoraPage.jsx`) ✅ Hecho
+- `src/infrastructure/repositorios.js` — composition root: instancia única
+  de `registroRepository` y `configuracionRepository`. Es el único lugar
+  del proyecto que sabe que la implementación es `localStorage`; toda la UI
+  importa desde acá, nunca instancia repositorios por su cuenta.
+- `src/presentation/shared/formatters.js` — `formatearTiempo(minutos)` (ej.
+  `185` → `"3h 5m"`) y `formatearMoneda(valor)` (`Intl.NumberFormat` en
+  `es-AR`/ARS).
+- `src/presentation/hooks/useCalculadora.js` — estado del formulario,
+  cálculo en vivo con `calcularCosto` (sin tocar el repositorio hasta
+  guardar) y `guardar()` que llama a `crearRegistro` (application) y
+  resetea el formulario.
+- `src/presentation/pages/CalculadoraPage.jsx` — implementación real
+  (reemplaza el placeholder de la Etapa 0). Grid de 2 columnas: formulario
+  a la izquierda, panel de resultados en `font-mono` a la derecha, con los
+  6 valores desglosados (margen mostrado en ARS, no en %).
 
 ### Etapa 5 — UI: Modelos y gastos (`ModelosYGastosPage.jsx`)
 
