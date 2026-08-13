@@ -1,3 +1,6 @@
+TONY PUTO DE MIERDA
+
+
 # Calculadora 3D — Plan del proyecto y estado actual
 
 Este documento es la fuente de verdad del proyecto. Si estás retomando este
