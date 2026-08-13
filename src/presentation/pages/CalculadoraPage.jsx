@@ -6,6 +6,8 @@ const inputClases =
 
 export default function CalculadoraPage() {
   const {
+    esEdicion,
+    cargando,
     nombre,
     setNombre,
     gramos,
@@ -21,6 +23,10 @@ export default function CalculadoraPage() {
     guardar,
   } = useCalculadora()
 
+  if (cargando) {
+    return <p className="text-steel text-sm">Cargando registro…</p>
+  }
+
   return (
     <section className="grid gap-6 md:grid-cols-2">
       <form
@@ -30,7 +36,7 @@ export default function CalculadoraPage() {
         }}
         className="bg-surface border border-line rounded-lg p-5 space-y-4"
       >
-        <h1 className="text-lg font-semibold">Calculadora</h1>
+        <h1 className="text-lg font-semibold">{esEdicion ? 'Editar registro' : 'Calculadora'}</h1>
 
         <Campo label="Nombre del modelo *">
           <input
@@ -83,7 +89,7 @@ export default function CalculadoraPage() {
           disabled={!datosValidos || guardando}
           className="w-full bg-accent hover:bg-accentDark disabled:bg-line disabled:text-steel text-white font-medium rounded-md py-2 transition-colors"
         >
-          {guardando ? 'Guardando…' : 'Guardar registro'}
+          {guardando ? 'Guardando…' : esEdicion ? 'Guardar cambios' : 'Guardar registro'}
         </button>
       </form>
 

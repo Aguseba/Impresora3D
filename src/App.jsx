@@ -40,6 +40,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/calculadora" replace />} />
           <Route path="/calculadora" element={<CalculadoraPage />} />
+          <Route path="/calculadora/:id" element={<CalculadoraPage />} />
           <Route path="/modelos" element={<ModelosYGastosPage />} />
           <Route path="/configuracion" element={<ConfiguracionPage />} />
           <Route path="/importar-exportar" element={<ImportarExportarPage />} />

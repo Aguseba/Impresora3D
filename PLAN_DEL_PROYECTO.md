@@ -145,14 +145,24 @@ persistencia con estado.
   a la izquierda, panel de resultados en `font-mono` a la derecha, con los
   6 valores desglosados (margen mostrado en ARS, no en %).
 
-### Etapa 5 — UI: Modelos y gastos (`ModelosYGastosPage.jsx`)
-
-Tabla con columnas: Modelo, Gramos, Tiempo (formato horas+minutos, usar
-`src/presentation/shared/formatters.js` función `formatearTiempo(minutos)`),
-Total en ARS, Acciones (Ver/Editar/Eliminar). Click en un modelo abre detalle
-(modal o vista expandida) con todos los costos desglosados. Eliminar pide
-confirmación. Editar reutiliza el formulario de Calculadora precargado.
-Crear `src/presentation/hooks/useRegistros.js` (listar/refrescar/eliminar).
+### Etapa 5 — UI: Modelos y gastos (`ModelosYGastosPage.jsx`) ✅ Hecho
+- `src/presentation/hooks/useRegistros.js` — `listar`/`refrescar`/`eliminar`
+  sobre `registroRepository`.
+- `src/presentation/components/ConfirmDialog.jsx` — modal de confirmación
+  genérico y reutilizable (título, mensaje, `onConfirmar`/`onCancelar`).
+- `src/presentation/components/DetalleRegistroModal.jsx` — modal con el
+  desglose completo de un registro (filamento/eléctrico/desgaste/subtotal/
+  total + notas), se abre con la acción "Ver".
+- `src/presentation/pages/ModelosYGastosPage.jsx` — tabla con Modelo,
+  Gramos, Tiempo (formateado), Total, Acciones (Ver/Editar/Eliminar).
+  "Editar" navega a `/calculadora/:id`. "Eliminar" abre `ConfirmDialog`.
+- **Extensión necesaria de la Etapa 4**: `useCalculadora.js` y
+  `CalculadoraPage.jsx` ahora también sirven como formulario de edición.
+  Se agregó la ruta `/calculadora/:id` en `App.jsx`. El hook detecta el
+  `id` de la URL (`useParams`), precarga el registro si existe, y en
+  `guardar()` llama a `actualizarRegistro` en vez de `crearRegistro`,
+  navegando de vuelta a `/modelos` al terminar. El modo creación
+  (`/calculadora` sin id) sigue funcionando exactamente igual que antes.
 
 ### Etapa 6 — UI: Configuración (`ConfiguracionPage.jsx`)
 
