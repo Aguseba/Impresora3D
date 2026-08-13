@@ -188,14 +188,40 @@ persistencia con estado.
   archivo oculto disparado por botón, y resumen de resultado con errores
   fila por fila).
 
-### Etapa 8 — Deploy a GitHub Pages
+### Etapa 8 — Deploy a GitHub Pages ✅ Hecho
+- `vite.config.js` con `base: './'` (ya estaba desde la Etapa 0).
+- `.github/workflows/deploy.yml` — build con `npm run build` en cada push a
+  `main` (o manual vía `workflow_dispatch`), publica `dist/` usando el
+  flujo oficial de GitHub Pages por Actions (`upload-pages-artifact` +
+  `deploy-pages`), no la rama `gh-pages` clásica.
+- `README.md` actualizado con los pasos: subir a GitHub, activar
+  **Settings → Pages → Source: GitHub Actions**, y listo — cada push
+  deploya solo.
 
-- Confirmar `vite.config.js` (`base: './'`, ya hecho en Etapa 0).
-- Crear `.github/workflows/deploy.yml`: build en cada push a `main`, publish
-  de `dist/` a la rama `gh-pages` (o GitHub Pages desde Actions).
-- Actualizar `README.md` con la URL final una vez deployado.
+### Etapa 9 — Recalcular registros existentes (pedido nuevo del usuario)
 
-### Etapa 9 — Backend FastAPI (opcional, independiente del frontend)
+Botón en Configuración, al lado de "Guardar configuración", que recorre
+todos los registros guardados y les recalcula los costos con los
+parámetros que se acaban de guardar (hasta ahora, cambiar la configuración
+solo afectaba a registros *nuevos*; esto permite además actualizar los
+*existentes* a pedido, sin que sea automático).
+
+- **`src/application/RecalcularRegistros.js`** — nuevo caso de uso:
+  `recalcularRegistros(configuracion, registroRepository)`. Lista todos los
+  registros, para cada uno vuelve a correr `calcularCosto` con sus
+  `gramos`/`tiempoMinutos` originales y la configuración nueva, arma el
+  registro actualizado (mismo `id`, mismo `fechaCreacion`) y lo guarda.
+  Devuelve la cantidad de registros actualizados.
+- **`src/presentation/hooks/useConfiguracion.js`** (editar) — agregar
+  `recalculando` (estado) y una función `recalcular()` que llama a
+  `guardar()` primero (para no recalcular con datos sin guardar) y después
+  a `recalcularRegistros`, mostrando cuántos registros se actualizaron en
+  `mensaje`.
+- **`src/presentation/pages/ConfiguracionPage.jsx`** (editar) — agregar un
+  segundo botón junto a "Guardar configuración", ej. "Guardar y actualizar
+  modelos existentes", con su propio estado de carga.
+
+### Etapa 10 — Backend FastAPI (opcional, independiente del frontend)
 
 Mismo patrón Clean Architecture en Python, mismas fórmulas, persistencia en
 un único archivo `data/registros.json` + `data/configuracion.json`. No se
