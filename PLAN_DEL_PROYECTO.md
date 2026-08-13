@@ -243,4 +243,4 @@ app/
 Trabajar una etapa a la vez, en orden. Antes de escribir código de una
 etapa, releer la sección correspondiente acá arriba. Al terminar una etapa,
 actualizar este archivo marcándola como hecha (mover su descripción a la
-sección "Estado actual") para que la siguiente sesión no pierda el hilo.
+sección "Estado actual") para que la siguiente sesión no pierda el hilo...
