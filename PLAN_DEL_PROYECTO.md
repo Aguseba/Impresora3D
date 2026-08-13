@@ -164,12 +164,16 @@ persistencia con estado.
   navegando de vuelta a `/modelos` al terminar. El modo creación
   (`/calculadora` sin id) sigue funcionando exactamente igual que antes.
 
-### Etapa 6 — UI: Configuración (`ConfiguracionPage.jsx`)
-
-Formulario con los 6 parámetros, precargados desde
-`ObtenerConfiguracion`. Guardar llama a `ActualizarConfiguracion` con
-`validarConfiguracion`. Aclarar en la UI que los cambios solo afectan
-cálculos nuevos, no los registros ya guardados (que tienen su snapshot).
+### Etapa 6 — UI: Configuración (`ConfiguracionPage.jsx`) ✅ Hecho
+- `src/presentation/hooks/useConfiguracion.js` — carga los 6 parámetros
+  como strings (para que los `<input>` controlados no peleen con ceros a
+  la izquierda mientras se tipea), valida y guarda con
+  `actualizarConfiguracion`.
+- `src/presentation/pages/ConfiguracionPage.jsx` — formulario agrupado en
+  3 `fieldset`: Materiales (Tipo fijo "PLA" + Precio por Kg editable),
+  Costos operativos (kWh, W, repuestos, vida útil), Margen. Aclara en texto
+  que los cambios solo afectan cálculos nuevos, no los registros ya
+  guardados (que tienen su costo como snapshot).
 
 ### Etapa 7 — UI: Importar/Exportar (`ImportarExportarPage.jsx`)
 
